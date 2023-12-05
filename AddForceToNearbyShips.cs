@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace _Game
 {
-    public class AddForceToNearbyShips : MonoBehaviour
-    {
+	public class AddForceToNearbyShips : MonoBehaviour
+	{
 		public float Force = 100f;
-        public float MaxDistance = 100f;
+		public float MaxDistance = 100f;
 		public ForceMode Mode = ForceMode.Impulse;
 		public float DelaySecs = 0;
 
 		Collider[] nearbyColliders = new Collider[40];
 		int nearbyCollidersTotal = 0;
 
-        void Start()
-        {
+		void Start()
+		{
 			if (!GameManager.IsServer)
 				return;
 
@@ -39,6 +39,6 @@ namespace _Game
 					}
 				};
 			}
-        }
-    }
+		}
+	}
 }
