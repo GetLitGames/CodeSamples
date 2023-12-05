@@ -17,10 +17,10 @@ namespace _Game
 		public GameObject ProjectilePrefab;
 
 		[Range(0, 180f)] 
-		public float angle = 45f;
-		public float maxTurnSpeed = 90f;
-		public float CooldownSecs = 3f;
-		public float MaxRange = 200f;
+		[SerializeField] float Angle = 45f;
+		[SerializeField] float MaxTurnSpeed = 90f;
+		[SerializeField] float CooldownSecs = 3f;
+		[SerializeField] float MaxRange = 200f;
 
 		[ShowInInspector] [ReadOnly] public ICharacter Target { get; private set; } = null;
 
@@ -103,17 +103,17 @@ namespace _Game
 			var signedAngle = Vector3.SignedAngle(hardpoint.forward, targetDirection, hardpoint.up);
 
 			bool outOfRange = false;
-			if (Mathf.Abs(signedAngle) > angle)
+			if (Mathf.Abs(signedAngle) > Angle)
 			{
 				outOfRange = true;
-				targetDirection = hardpoint.rotation * Quaternion.Euler(0, Mathf.Clamp(signedAngle, -angle, angle), 0) * Vector3.forward;
+				targetDirection = hardpoint.rotation * Quaternion.Euler(0, Mathf.Clamp(signedAngle, -Angle, Angle), 0) * Vector3.forward;
 			}
 
 			var targetRotation = Quaternion.LookRotation(targetDirection, hardpoint.up);
 			//bool aimed = false;
 			//if (Quaternion.Angle(targetRotation, transform.rotation) <= 45f && !outOfRange)
 				//aimed = true;
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxTurnSpeed * Time.deltaTime);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, MaxTurnSpeed * Time.deltaTime);
 			if (!outOfRange && CooldownTime <= Time.time)
 			{
 				CooldownTime = Time.time + CooldownSecs;
@@ -133,10 +133,10 @@ namespace _Game
 			var hardpoint = turret.parent;
 		
 			if (!hardpoint) return;
-			var from = Quaternion.AngleAxis(-angle, hardpoint.up) * hardpoint.forward;
+			var from = Quaternion.AngleAxis(-Angle, hardpoint.up) * hardpoint.forward;
 		
 			Handles.color = new Color(0, 1, 0, .2f);
-			Handles.DrawSolidArc(origin, turret.up, from, angle * 2, range);
+			Handles.DrawSolidArc(origin, turret.up, from, Angle * 2, range);
 
 			if (Target == null) return;
 		
@@ -147,7 +147,7 @@ namespace _Game
 			Handles.DrawDottedLine(Target.NetworkObject.transform.position, turret.position + projection, dashLineSize);
 		
 			// do not draw target indicator when out of angle
-			if (Vector3.Angle(hardpoint.forward, projection) > angle) return;
+			if (Vector3.Angle(hardpoint.forward, projection) > Angle) return;
 		
 			// target line
 			Handles.color = Color.red;
@@ -155,7 +155,7 @@ namespace _Game
 		
 			// range line
 			Handles.color = Color.green;
-			Handles.DrawWireArc(origin, turret.up, from, angle * 2, projection.magnitude);
+			Handles.DrawWireArc(origin, turret.up, from, Angle * 2, projection.magnitude);
 			Handles.DrawSolidDisc(turret.position + projection, turret.up, .5f);
 	#endif
 		}
