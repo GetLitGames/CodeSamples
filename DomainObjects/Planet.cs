@@ -234,8 +234,8 @@ namespace _Game
 			UIManager.TogglePanel("station", this);
 		}
 
-        public bool SubtractMarketItem(int index, float amount) {
-            var st = MarketInventoryItemStructs.Get(index);
+		public bool SubtractMarketItem(int index, float amount) {
+			var st = MarketInventoryItemStructs.Get(index);
 			switch(st.ItemType)
 			{
 				case ItemCategory.Ship:
@@ -249,11 +249,11 @@ namespace _Game
 				return true;
 			}
 			return false;
-        }
+		}
 
-        public bool SubtractResource(int resourceDefId, float amount) 
+		public bool SubtractResource(int resourceDefId, float amount) 
 		{
-            for(int i=0; i<MarketInventoryItemStructs.Length; i++)
+			for(int i=0; i<MarketInventoryItemStructs.Length; i++)
 			{
 				var miis = MarketInventoryItemStructs.Get(i);
 				if (miis.ResourceDefId == resourceDefId && miis.Amount >= amount)
@@ -264,9 +264,9 @@ namespace _Game
 				}
 			}
 			return false;
-        }
+		}
 
-        public bool SubtractResourcesForUpgrade(int planetUpgradeDefId, int level)
+		public bool SubtractResourcesForUpgrade(int planetUpgradeDefId, int level)
 		{
 			bool allPassed = true;
 			var upgrade = Defs.GetPlanetUpgradeDef(planetUpgradeDefId);
@@ -286,7 +286,7 @@ namespace _Game
 
 		public int FindResourceIndex(int resId)
 		{
-            for(int i=0; i<MarketInventoryItemStructs.Length; i++)
+			for(int i=0; i<MarketInventoryItemStructs.Length; i++)
 			{
 				var miis = MarketInventoryItemStructs.Get(i);
 				if (miis.ResourceDefId == resId)
@@ -421,7 +421,7 @@ namespace _Game
 
 		public bool CanAffordResource(int resourceId, float amount)
 		{
-            foreach(var miis in MarketInventoryItemStructs.Where(x => x.ItemType == ItemCategory.Resource))
+			foreach(var miis in MarketInventoryItemStructs.Where(x => x.ItemType == ItemCategory.Resource))
 			{
 				if (miis.ResourceDefId == resourceId && miis.Amount >= amount)
 					return true;
